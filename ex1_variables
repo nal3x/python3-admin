@@ -1,0 +1,13 @@
+#!/usr/bin/env python3.8
+#Exercise 1: Creating and Displaying Variables
+
+first_name = "Nikos"
+last_name = "Alexiou"
+age = 37
+birth_date = "11-15-82"
+
+print("My name is %s %s." % (first_name, last_name)) # %-formating
+print("I was born on {1} and I'm {0} years old.".format(age, birth_date)) # str.format
+
+print(f"My name is {first_name} {last_name}") #String interpolation / f-string
+print("I was born on", birth_date, "and I'm", age, "years old")
