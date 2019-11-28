@@ -1,0 +1,32 @@
+#!/usr/bin/env python3.8
+
+def gather_info():
+    while True:
+        system = input("Metric or imperial? ").lower().strip()
+        if system.startswith('i'):
+            system = 'imperial'
+            break
+        if system.startswith('m'):
+            system = 'metric'
+            break
+
+    height = float(input("What is your height? "))
+    weight = float(input("What is your weight? "))
+
+    return (weight, height, system) #use a tuple to return multiple values
+
+def calculate_bmi(weight, height, system='metric'): #system defaults to metric
+    if system == 'metric':
+        bmi = (weight / (height ** 2))
+    else:
+        bmi = 703 * (weight / (height ** 2))
+    return bmi
+
+
+weight, height, system = gather_info() #unpack tuple returned from function
+if system == 'metric':
+    bmi = calculate_bmi(weight, height)
+else:
+    bmi = calculate_bmi(weight, height, system)
+
+print(f"Your BMI is {bmi}")
