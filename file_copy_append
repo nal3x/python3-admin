@@ -1,0 +1,23 @@
+#!/usr/bin/env python3.8
+
+# creates new_xmen.txt, writes the contents of xmen_base.txt to it, and then appends xmen_more.txt
+
+def print_file(filename):
+    print(f"Contents of {filename} are:")
+    with open(filename) as file:
+        for line in file:
+            print(line, end='')
+
+#copying contents of xmen_base.txt to new_xmen.txt
+with open('xmen_base.txt') as f1:
+    with open('new_xmen.txt', 'w') as f2:
+        f2.write(f1.read())
+
+print_file('new_xmen.txt')
+
+#appending contents of xmen_more.txt to new_xmen.txt
+with open('xmen_more.txt') as f1:
+    with open('new_xmen.txt', 'a') as f2:
+        f2.write(f1.read())
+
+print_file('new_xmen.txt')

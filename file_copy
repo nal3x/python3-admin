@@ -1,0 +1,15 @@
+#!/usr/bin/env python3.8
+
+# creates new_xmen.txt, writes the contents of xmen_base.txt to it
+
+xmen_base = open('xmen_base.txt') #defaults to 'r', for read
+new_xmen = open('new_xmen.txt', 'w') #write truncates a file if it exists
+
+new_xmen.write(xmen_base.read())
+new_xmen.close()
+xmen_base.close()
+
+new_xmen = open('new_xmen.txt')
+print("Contents of new_xmen.txt are:")
+for line in new_xmen:
+    print(line, end='')
