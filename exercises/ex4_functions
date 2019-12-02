@@ -1,0 +1,15 @@
+#!/usr/bin/env python3.8
+
+def print_message(message, count=1):
+    for n in range(count):
+        print(f"{n + 1}: message")
+
+
+message = input('Provide message to echo: ')
+number = input('Provide number of times to echo: ')
+
+if not number:
+    print_message(message)
+else:
+    print_message(message, int(number))
+print('Goodbye!')

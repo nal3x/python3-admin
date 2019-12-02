@@ -1,0 +1,14 @@
+#!/usr/bin/env python3.8
+
+import os
+from math import pi
+
+digits = int(os.getenv("DIGITS", 10))
+
+"""
+'%' marks the start of the specifier.
+'.' gives the precision, here specified as '*': the actual precision is read from the
+next element of the tuple in values, and the value to convert comes after the precision.
+"""
+
+print("%.*f" % (digits, pi))

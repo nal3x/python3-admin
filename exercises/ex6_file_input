@@ -1,0 +1,17 @@
+#!/usr/bin/env python3.8
+
+while True:
+    filename = input("Name of file: ").strip()
+    if filename:
+        break
+
+print(f"Writing to {filename}.txt")
+
+filename += '.txt'
+
+with open(filename, 'w') as file:
+    while True:
+        line = input()
+        if not line:
+            break
+        file.write(line + "\n")
