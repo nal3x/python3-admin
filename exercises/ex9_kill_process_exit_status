@@ -1,0 +1,23 @@
+#!/usr/bin/env python3.8
+
+import subprocess
+import argparse
+import os
+import sys
+
+parser = argparse.ArgumentParser(description='Kill the process which listens on specified port')
+parser.add_argument('port', type=int, help='port number')
+
+args = parser.parse_args()
+try:
+    proc = subprocess.run(['sudo', 'lsof', '-n',f'-i4TCP:{args.port}'], capture_output=True)
+    proc.check_returncode()
+except subprocess.CalledProcessError:
+    print(f"No process listening on port {args.port}")
+    exit(1)
+else:
+    lines = proc.stdout.decode().splitlines()
+    listen_pids= [int(line.split()[1]) for line in lines if 'LISTEN' in line]
+    for pid in listen_pids:
+        os.kill(pid,9)
+        print(f"Killed process with pid {pid}")
