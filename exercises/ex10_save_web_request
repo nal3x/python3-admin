@@ -3,6 +3,8 @@
 import requests
 import sys
 import json
+import os
+import re
 
 from argparse import ArgumentParser
 
@@ -13,14 +15,25 @@ parser.add_argument('-r', '--response', choices = ['html', 'json'], default='htm
 
 args = parser.parse_args()
 
-r = requests.get(args.url) #network problems will raise a ConnectionError exception. If a request times out, a Timeout exception is raised.
-
-if r.status_code != 200:
-    print(f"Error: could not get response. Code: {r.status_code}")
+if os.path.exists(args.filename):
+    while True:
+        user_response = input(f"File {args.filename} already exists. Replace file contents? ")
+        if re.match('[Yy]', user_response):
+            break
+        elif re.match('[nN]',user_response):
+            sys.exit(0)
+try:
+    r = requests.get(args.url) #network problems will raise a ConnectionError exception. If a request times out, a Timeout exception is raised.
+except requests.exceptions.RequestException as err:
+    print(f"Connection error: {err}")
     sys.exit(1)
+else:
+    if r.status_code != 200:
+        print(f"Error: could not get response. Code: {r.status_code}")
+        sys.exit(1)
 
-with open(args.filename, 'w') as file:
-    if args.response == 'json':
-        json.dump(r.json(), file)
-    elif args.response == 'html':
-        file.write(r.text)
+    with open(args.filename, 'w') as file:
+        if args.response == 'json':
+            json.dump(r.json(), file)
+        elif args.response == 'html':
+            file.write(r.text)
