@@ -127,6 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# exclude receipts generated
-/receipts/**/receipt-[0-9]*.json

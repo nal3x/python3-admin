@@ -1,0 +1,3 @@
+**/receipt-[0-9]*.json
+#processed/**
+#new/**
