@@ -23,4 +23,32 @@ def create(user_info):
             print(f"Error: {err}")
             sys.exit(1)
 
+def modify(user_info):
+    """
+    Updates a user based on the provided user dictionary
+    """
+    try:
+        proc = subprocess.run(
+                ['usermod',
+                '-G', ','.join(user_info.get('groups')),
+                '-p', user_info.get('password'),
+                user_info.get('name')],
+                check = True
+                )
+    except CalledProcessError as err:
+        print(f"Error: {err}")
+        sys.exit(1)
+
+
+def delete(username):
+    """
+    Removes a user with a given username
+    """
+    try:
+        proc = subprocess.run(
+                ['userdel', '-r', username],
+                check=True)
+    except CalledProcessError as err:
+        print(f"Error: {err}")
+        sys.exit(1)
 
