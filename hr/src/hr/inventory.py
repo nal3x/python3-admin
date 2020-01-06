@@ -9,7 +9,10 @@ def parse(filename):
 def default_users():
     return [user.pw_name for user in pwd.getpwall() if user.pw_uid >= 1000]
 
-def dump(path, users=default_users()): #default arguments are evaluated once when the function is defined, not each time the function is called
+# Default arguments are evaluated once when the function is defined, not each
+# time the function is called, so default_users must be declared before.
+
+def dump(path, users=default_users()):
     """
     Accepts a list of system users (defaults to all normal ie non-system users)
     and exports them in a properly formatted json indicated by path
@@ -24,7 +27,8 @@ def dump(path, users=default_users()): #default arguments are evaluated once whe
             if username in gr_members:
                 groups.append(gr_name)
         user_dict['groups'] = groups
-        user_dict['password'] = spwd.getspnam(username).sp_pwd
+        (nam, pwd, lstchg, min_d, max_d, warn, inact, expire, flag) = spwd.getspnam(username)
+        user_dict['password'] = pwd
         user_dicts.append(user_dict)
     with open(path, 'w') as f:
         json.dump(user_dicts, f)
