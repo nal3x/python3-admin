@@ -11,7 +11,8 @@ def default_users():
 
 def dump(path, users=default_users()): #default arguments are evaluated once when the function is defined, not each time the function is called
     """
-    exports all users of the system in properly formatted json
+    Accepts a list of system users (defaults to all normal ie non-system users)
+    and exports them in a properly formatted json indicated by path
     """
     user_dicts = []
     for username in users:
@@ -19,8 +20,9 @@ def dump(path, users=default_users()): #default arguments are evaluated once whe
         user_dict['name'] = username #assignment adds key in dictionary!
         groups = [] #in latest python, dictionaries remember insertion order
         for group in grp.getgrall():
-            if username in group.gr_mem:
-                groups.append(group.gr_name)
+            (gr_name, gr_passwd, gr_id, gr_members) = group #unpacking to tuple for easier testing
+            if username in gr_members:
+                groups.append(gr_name)
         user_dict['groups'] = groups
         user_dict['password'] = spwd.getspnam(username).sp_pwd
         user_dicts.append(user_dict)

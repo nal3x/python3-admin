@@ -3,19 +3,21 @@ import pytest
 import json
 from hr import inventory
 
-
 users_data = [{"name": "kevin", "groups": ["wheel", "dev"], "password": "$6$HXdlMJqcV8LZ1DIF$LCXVxmaI/ySqNtLI6b64LszjM0V5AfD.ABaUcf4j9aJWse2t3Jr2AoB1zZxUfCr8SOG0XiMODVj2ajcQbZ4H4/"}, {"name": "lisa", "groups": ["wheel"], "password": "$6$HXdlMJqcV8LZ1DIF$LCXVxmaI/ySqNtLI6b64LszjM0V5AfD.ABaUcf4j9aJWse2t3Jr2AoB1zZxUfCr8SOG0XiMODVj2ajcQbZ4H4/"}, {"name": "jim","groups": [],"password": "$6$HXdlMJqcV8LZ1DIF$LCXVxmaI/ySqNtLI6b64LszjM0V5AfD.ABaUcf4j9aJWse2t3Jr2AoB1zZxUfCr8SOG0XiMODVj2ajcQbZ4H4/"}]
 
 invalid_data = '{["key1", "key2"]:"value"}'
 
 malformed_data = [{"key": "value"}, 1]
 
+
+
+
 # this is the way to write a fixture that accepts arguments!
 @pytest.fixture
 def json_writer():
     def _writer(content):
         with tempfile.NamedTemporaryFile('r+', delete=False) as f:
-            if isinstance(content, str):
+            if isinstance(content, str): #we don't use dump for invalid data as json.dump may encode to proper json
                 f.write(content)
             else:
                 json.dump(content, f)
