@@ -32,6 +32,7 @@ def create(user_info):
     if username not in system_users:
         groups = ','.join(user_info.get('groups'))
         try:
+            print(f"Adding user {username}")
             proc = subprocess.run(
                     ['useradd', '-G', groups, '-p', user_info.get('password'), username],
                     stdout=subprocess.PIPE,
@@ -40,33 +41,41 @@ def create(user_info):
         except CalledProcessError as err:
             print(f"Error: {err}")
             sys.exit(1)
+        else:
+            print(f"Added user {username}")
 
 def modify(user_info):
     """
     Updates a user based on the provided user dictionary
     """
     try:
+        username = user_info.get('name')
+        print(f"Updating user {username}")
         proc = subprocess.run(
                 ['usermod',
                 '-G', ','.join(user_info.get('groups')),
                 '-p', user_info.get('password'),
-                user_info.get('name')],
+                username],
                 check = True
                 )
     except CalledProcessError as err:
         print(f"Error: {err}")
         sys.exit(1)
-
+    else:
+        print(f"Updated user {username}")
 
 def delete(username):
     """
     Removes a user with a given username
     """
     try:
+        print(f"Deleting user {username}")
         proc = subprocess.run(
                 ['userdel', '-r', username],
                 check=True)
     except CalledProcessError as err:
         print(f"Error: {err}")
         sys.exit(1)
+    else:
+        print(f"Deleted user {username}")
 

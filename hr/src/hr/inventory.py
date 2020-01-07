@@ -1,6 +1,10 @@
 import json, sys, pwd, spwd, grp
 
 def parse(filename):
+    """
+    Reads a given inventory file, parses the JSON and returns a list of user
+    dictionaries
+    """
     with open(filename, 'r') as f:
         users = json.load(f)
     content_check(users)
