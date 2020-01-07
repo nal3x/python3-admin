@@ -20,13 +20,11 @@ Make users of host match the contents of provided file:
 
     $ sudo hr users_to_import.json
 
-
 Export host users in json formatted file:
 
-
 ::
-    $ sudo hr --export exported_users.json
 
+    $ sudo hr --export exported_users.json
 
 
 Running Tests
